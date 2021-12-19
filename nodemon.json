@@ -1,0 +1,6 @@
+{
+  "verbose": false,
+  "watch": ["./src/**/*"],
+  "exec": "webpack --mode=development && node ./build/server.js",
+  "ext": "js, ts"
+}
