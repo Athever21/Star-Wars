@@ -582,6 +582,36 @@
           "404": "Not found"
         }
       }
+    },
+    "/unique_words": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get all words from films opening_crawl property and count their apperance",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/character_most_apperance": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Count how much charater appears in films opening_crawl propery and return name of character that appeard the most",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          }
+        ]
+      }
     }
   },
   "schemes": ["http"],
