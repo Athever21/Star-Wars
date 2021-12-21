@@ -449,7 +449,7 @@
         }
       }
     },
-    "/starsgips": {
+    "/starships": {
       "get": {
         "tags": ["Star Wars"],
         "summary": "Get star wars starships",
