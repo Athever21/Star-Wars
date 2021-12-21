@@ -5,7 +5,7 @@ const refresh_secret = process.env.jwt_secret_refresh || "secret_refresh";
 
 export const createToken = (payload: any, refresh: boolean) => {
   const tokenOpts = {
-    expiresIn: refresh ? "5m" : "7d"
+    expiresIn: refresh ? "7d" : "5m"
   }
   
   delete payload.exp;

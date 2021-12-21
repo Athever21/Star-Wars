@@ -15,10 +15,12 @@ export default (req: AuthRequest, _: Response, next: NextFunction) => {
 
   if (!auth.startsWith("Bearer ")) return next(new CustomError(invalidAuthHeader, 401));
 
-  const tokenData = getDataFromToken(auth.substring(7), false);
+  try {
+    const tokenData = getDataFromToken(auth.substring(7), false);
 
-  if (!tokenData) return next(new CustomError(invalidAuthHeader, 401));
-
-  req.authUser = tokenData as IUser;
-  return next();
+    req.authUser = tokenData as IUser;
+    return next();
+  } catch {
+    return next(new CustomError(invalidAuthHeader, 401));
+  }
 }

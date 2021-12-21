@@ -33,7 +33,7 @@ describe("Create user", () => {
       await createUser("", "test");
     } catch (e) {
       expect(e.message).toBe(createUserMissing);
-      expect(e.getCode()).toBe(400);
+      expect(e.code).toBe(400);
       done();
     }
   });
@@ -43,7 +43,7 @@ describe("Create user", () => {
       await createUser("withoutpass@test.com", "");
     } catch (e) {
       expect(e.message).toBe(createUserMissing);
-      expect(e.getCode()).toBe(400);
+      expect(e.code).toBe(400);
       done();
     }
   });
@@ -55,7 +55,7 @@ describe("Create user", () => {
       done();
     } catch (e) {
       expect(e.message).toBe(existingEmailError);
-      expect(e.getCode()).toBe(400);
+      expect(e.code).toBe(400);
       done();
     }
   });
@@ -104,7 +104,7 @@ describe("change User", () => {
       expect(true).toBe(false);
     } catch (e) {
       expect(e.message).toEqual(userNotFound);
-      expect(e.getCode()).toEqual(404);
+      expect(e.code).toEqual(404);
       done();
     }
   });
@@ -117,7 +117,7 @@ describe("change User", () => {
       expect(true).toBe(false);
     } catch (e) {
       expect(e.message).toEqual(existingEmailError);
-      expect(e.getCode()).toEqual(400);
+      expect(e.code).toEqual(400);
       done();
     }
   });

@@ -10,8 +10,8 @@ export default (
   if (!error) {
     return next();
   }
-
+ 
   return res
-    .status(error.getCode())
+    .status(error.code)
     .json({ error: error.message });
 };

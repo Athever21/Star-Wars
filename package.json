@@ -17,6 +17,7 @@
     "argon2": "^0.28.3",
     "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
+    "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
     "mongoose-unique-validator": "^3.0.0",

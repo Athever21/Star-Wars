@@ -23,7 +23,6 @@ export const createTokenService = async (
   if (refreshToken) {
     const tokenData = getDataFromToken(refreshToken, true);
 
-
     if (!tokenData) return next(new CustomError(invalidToken, 401));
 
     const newToken = createToken(tokenData, false);

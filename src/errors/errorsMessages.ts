@@ -11,3 +11,5 @@ export const invalidToken = "invalid token";
 export const invalidAuthHeader = "invalid authorization header";
 
 export const forbidden = "forbidden";
+
+export const notFound = "not found";
