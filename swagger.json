@@ -1,0 +1,590 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Star Wars Api",
+    "description": "Star Wars Api based on https://swapi.dev/"
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "users",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "token",
+      "description": "API for creating tokens"
+    },
+    {
+      "name": "Star Wars",
+      "description": "API for star wars resources. Need token to access"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Returns all created users"
+      },
+      "post": {
+        "tags": ["users"],
+        "summary": "Create new user and return it",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "body",
+            "description": "The email for user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "The password for user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "put": {
+        "tags": ["users"],
+        "summary": "Change user and return it",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token authorization for user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id for change",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "description": "The email for change",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "The password for change",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid email"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["users"],
+        "summary": "Delete user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token authorization for user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User not fond"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/token": {
+      "post": {
+        "tags": ["token"],
+        "summary": "Log user based on email and password and return token or return token based on refresToken cookie",
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "description": "Refresh token created by login with email and password",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "body",
+            "description": "The email for login",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "The password for login",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid email or password or missing token"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["token"],
+        "summary": "Remove refresh token",
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "description": "Refresh token created by login with email and password",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/films": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars films",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Which page to return",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 0
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Determinate size of the page",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 25
+            }
+          },
+          {
+            "name": "Name of property",
+            "in": "query",
+            "description": "U can filter by practically any property in object",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/films/{id}": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars film by id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Film id",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": "Not found"
+        }
+      }
+    },
+    "/people": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars characters",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Which page to return",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 0
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Determinate size of the page",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 25
+            }
+          },
+          {
+            "name": "Name of property",
+            "in": "query",
+            "description": "U can filter by practically any property in object",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/people/{id}": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars person by id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Person id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": "Not found"
+        }
+      }
+    },
+    "/species": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars species",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Which page to return",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 0
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Determinate size of the page",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 25
+            }
+          },
+          {
+            "name": "Name of property",
+            "in": "query",
+            "description": "U can filter by practically any property in object",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/species/{id}": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars specie by id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Specie id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": "Not found"
+        }
+      }
+    },
+    "/planets": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars planets",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Which page to return",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 0
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Determinate size of the page",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 25
+            }
+          },
+          {
+            "name": "Name of property",
+            "in": "query",
+            "description": "U can filter by practically any property in object",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/planets/{id}": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars planet by id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Planet id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": "Not found"
+        }
+      }
+    },
+    "/starsgips": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars starships",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Which page to return",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 0
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Determinate size of the page",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 25
+            }
+          },
+          {
+            "name": "Name of property",
+            "in": "query",
+            "description": "U can filter by practically any property in object",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/starships/{id}": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars starship by id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Starship id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": "Not found"
+        }
+      }
+    },
+    "/vehicles": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars vehicles",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Which page to return",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 0
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Determinate size of the page",
+            "required": false,
+            "type": "string",
+            "schema": {
+              "default": 25
+            }
+          },
+          {
+            "name": "Name of property",
+            "in": "query",
+            "description": "U can filter by practically any property in object",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "/vehicles/{id}": {
+      "get": {
+        "tags": ["Star Wars"],
+        "summary": "Get star wars vehicle by id",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Need authorization token to access data. Fromat: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vehicle id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": "Not found"
+        }
+      }
+    }
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"]
+}

@@ -7,6 +7,7 @@ import { Mongoose } from "mongoose";
 import logger from "@/loaders/logger";
 import initDb from "@/loaders/initDb";
 import cache from "@/loaders/cache";
+import swagger from "@/loaders/swagger";
 
 import errorMiddleware from "@/errors/errorMiddleware";
 import authMiddleware from "@/helpers/authMiddleware";
@@ -28,6 +29,7 @@ const app = express();
 
 const dbPromise = initDb();
 logger(app);
+swagger(app);
 cache();
 app.use(express.json());
 app.use(cookieParser());
